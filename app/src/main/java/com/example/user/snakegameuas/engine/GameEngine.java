@@ -1,11 +1,14 @@
-package com.example.user.snakegame.engine;
+package com.example.user.snakegameuas.engine;
 
-import android.service.quicksettings.Tile;
+/**
+ * Created by USER on 2/19/2018.
+ */
 
-import com.example.user.snakegame.classes.Coordinate;
-import com.example.user.snakegame.enums.Direction;
-import com.example.user.snakegame.enums.GameState;
-import com.example.user.snakegame.enums.TileType;
+
+import com.example.user.snakegameuas.classes.Coordinate;
+import com.example.user.snakegameuas.enums.Direction;
+import com.example.user.snakegameuas.enums.GameState;
+import com.example.user.snakegameuas.enums.TileType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +18,10 @@ import java.util.List;
  */
 
 public class GameEngine {
-//    menentukan berapa banyak tinggi lingkaran di canvas
+    //    menentukan berapa banyak tinggi lingkaran di canvas
     public static final int GameWidth =28;
     public static final int GameHeight = 42;
-//untuk menyimpan list dari class coordinate
+    //untuk menyimpan list dari class coordinate
     private List<Coordinate> walls = new ArrayList<>();
     private List<Coordinate> snake = new ArrayList<>();
 
@@ -108,10 +111,10 @@ public class GameEngine {
 //        Top and Bottom Walls
         for(int x=0; x< GameWidth;x++){
             walls.add(new Coordinate(x,0));
-            walls.add(new Coordinate(x,GameHeight-1));
+            walls.add(new Coordinate(x,GameHeight-5));
         }
 //        Left and Right Walls
-        for (int y=1;y<GameHeight;y++){
+        for (int y=1;y<GameHeight-5;y++){
             walls.add(new Coordinate(0,y));
 //            kalau gameWidth saja error index out of bound
             walls.add(new Coordinate(GameWidth-1,y));

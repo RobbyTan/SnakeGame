@@ -1,4 +1,4 @@
-package com.example.user.snakegame.views;
+package com.example.user.snakegameuas.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,24 +6,25 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.service.quicksettings.Tile;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.example.user.snakegame.R;
-import com.example.user.snakegame.enums.TileType;
+import com.example.user.snakegameuas.R;
+import com.example.user.snakegameuas.enums.TileType;
 
 /**
- * Created by USER on 1/30/2018.
+ * Created by USER on 2/19/2018.
  */
-//extend view? , tileSizeX,Math.min
-public class SnakeView extends View{
+
+public class SnakeView extends View {
     private Paint mPaint= new Paint();
     private TileType snakeViewMap[][];
+//    private Bitmap image;
 
 
     public SnakeView(Context context, AttributeSet attrs) {
         super(context,attrs);
+//        image = BitmapFactory.decodeResource(getResources(), R.drawable.linux);
     }
     public void setSnakeViewMap (TileType[][] map){
         this.snakeViewMap=map;
@@ -63,8 +64,11 @@ public class SnakeView extends View{
                             break;
                     }
                     canvas.drawCircle(x * tileSizeX + tileSizeX/2f+ circleSize/2,y * tileSizeY +tileSizeY/2f + circleSize/2, circleSize,mPaint);
+                    System.out.println(tileSizeX/2f);
                 }
             }
         }
+//        Bitmap resizedBitmap = Bitmap.createScaledBitmap(image,50,50,false );
+//        canvas.drawBitmap(resizedBitmap, 0,0,null);
     }
 }

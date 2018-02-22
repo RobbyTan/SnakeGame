@@ -1,4 +1,4 @@
-package com.example.user.snakegame;
+package com.example.user.snakegameuas;
 
 import org.junit.Test;
 

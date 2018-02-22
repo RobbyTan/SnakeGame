@@ -3,12 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.user.snakegame.MainActivity">
+    tools:context="com.example.user.snakegameuas.MainActivity">
 
-<com.example.user.snakegame.views.SnakeView
-    android:id="@+id/snakeView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    <com.example.user.snakegameuas.views.SnakeView
+        android:id="@+id/snakeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/btnResume"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="28dp"
+        android:text="Resume" />
+
+    <Button
+        android:id="@+id/btnPause"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnResume"
+        android:layout_alignBottom="@+id/btnResume"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="Pause" />
+
 
 
 </RelativeLayout>

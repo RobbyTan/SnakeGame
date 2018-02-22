@@ -1,16 +1,18 @@
-package com.example.user.snakegame;
+package com.example.user.snakegameuas;
 
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.user.snakegame.engine.GameEngine;
-import com.example.user.snakegame.enums.Direction;
-import com.example.user.snakegame.enums.GameState;
-import com.example.user.snakegame.views.SnakeView;
+import com.example.user.snakegameuas.engine.GameEngine;
+import com.example.user.snakegameuas.enums.Direction;
+import com.example.user.snakegameuas.enums.GameState;
+import com.example.user.snakegameuas.views.SnakeView;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener{
 
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private final Handler handler = new Handler();
     private final long updateDelay = 125;
     private float prevX,prevY;
+    private Button btnPause,btnResume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,34 +31,59 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         gameEngine = new GameEngine();
         gameEngine.initGame();
         snakeView = (SnakeView) findViewById(R.id.snakeView);
+        btnPause = (Button) findViewById(R.id.btnPause);
+        btnResume = (Button) findViewById(R.id.btnResume);
 //        mengimplement method overide yang dibawah
         snakeView.setOnTouchListener(this);
         StartUpdateHandler();
+//        PauseUpdateHandler();
+        btnPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PauseUpdateHandler();
+                btnPause.setVisibility(View.INVISIBLE);
+                btnResume.setVisibility(View.VISIBLE);
+            }
+        });
+        btnResume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StartUpdateHandler();
+                btnResume.setVisibility(View.INVISIBLE);
+                btnPause.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void StartUpdateHandler(){
 //        untuk melakukan update setiap beberapa detik
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                gameEngine.Update();
-
-                if(gameEngine.getCurrentGameState() == GameState.Running){
-                    handler.postDelayed(this,updateDelay );
-                }
-                if (gameEngine.getCurrentGameState()==GameState.Lost){
-                    OnGameLost();
-                }
-                snakeView.setSnakeViewMap(gameEngine.getMap());
-//        invalidate untuk merefresh tampilan/redraw view
-                snakeView.invalidate();
-            }
-        },updateDelay);
+        handler.postDelayed(updateScreen,updateDelay);
     }
-//    context itu untuk tahu dimana run activity nya
+    private void PauseUpdateHandler(){
+        handler.removeCallbacks(updateScreen);
+    }
+    private Runnable updateScreen= new Runnable() {
+        @Override
+        public void run() {
+            gameEngine.Update();
+
+            if(gameEngine.getCurrentGameState() == GameState.Running){
+                handler.postDelayed(this,updateDelay );
+            }
+            if (gameEngine.getCurrentGameState()==GameState.Lost){
+                OnGameLost();
+            }
+            snakeView.setSnakeViewMap(gameEngine.getMap());
+//        invalidate untuk merefresh tampilan/redraw view
+            snakeView.invalidate();
+        }
+    };
+
+    //    context itu untuk tahu dimana run activity nya
     private void OnGameLost(){
 //        Toast membuat pesan kecil dibawah
         Toast.makeText(this,"You Lost.", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -93,6 +121,10 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 }
                 break;
         }
+        return true;
+    }
+    public boolean onCreateOptionsMenu(Menu menu ){
+        getMenuInflater().inflate(R.menu.my_menu,menu);
         return true;
     }
 }

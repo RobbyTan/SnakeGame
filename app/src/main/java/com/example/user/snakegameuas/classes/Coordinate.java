@@ -1,8 +1,4 @@
-package com.example.user.snakegame.classes;
-
-/**
- * Created by USER on 1/30/2018.
- */
+package com.example.user.snakegameuas.classes;
 
 public class Coordinate {
     private int x;
