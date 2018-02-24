@@ -10,5 +10,6 @@ public enum TileType {
     Wall,
     SnakeHead,
     SnakeTail,
-    Apple
+    Apple,
+    Venom
 }

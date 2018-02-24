@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.user.snakegameuas.Menu">
+
+    <Button
+        android:id="@+id/btnStartGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Game"
+        android:layout_above="@id/btnHighScore"/>
+    <Button
+        android:id="@+id/btnHighScore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="High Score"
+        android:layout_centerVertical="true"/>
+    <Spinner
+        android:id="@+id/spiDiffculty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnHighScore">
+
+    </Spinner>
+</RelativeLayout>

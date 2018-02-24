@@ -12,6 +12,8 @@ import com.example.user.snakegameuas.enums.TileType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 
 /**
  * Created by USER on 1/30/2018.
@@ -21,13 +23,28 @@ public class GameEngine {
     //    menentukan berapa banyak tinggi lingkaran di canvas
     public static final int GameWidth =28;
     public static final int GameHeight = 42;
+
+    public int getScore() {
+        return score;
+    }
+
+    private int score =0;
     //untuk menyimpan list dari class coordinate
     private List<Coordinate> walls = new ArrayList<>();
     private List<Coordinate> snake = new ArrayList<>();
+    private List<Coordinate> apples = new ArrayList<>();
+
+    private Random random = new Random();
+    private boolean increaseTail = false;
 
     private Direction currentDirection = Direction.East;
 
     private GameState currentGameState = GameState.Running;
+
+    private Coordinate getSnakeHead(){
+        return snake.get(0);
+    }
+
     public GameEngine(){
 
     }
@@ -35,7 +52,9 @@ public class GameEngine {
     public void initGame(){
         AddSnake();
         AddWalls();
+        AddApples();
     }
+
     public void UpdateDirection (Direction newDirection) {
 //      abs untuk membuat nilai mutlak
 //      ordinal adalah mengembalikan urutan dari enum
@@ -50,7 +69,6 @@ public class GameEngine {
     }
     public void Update(){
         switch (currentDirection){
-
             case North:
                 UpdateSnake(0,-1);
                 break;
@@ -73,16 +91,41 @@ public class GameEngine {
                 System.out.println(w);
             }
         }
+
+        //untuk memeriksa jika snake menabrak diri sendiri
+        for (int i = 1; i < snake.size() ; i++){
+            if (getSnakeHead().equals(snake.get(i))){
+                currentGameState = GameState.Lost;
+                return;
+            }
+        }
+
+        //untuk memerika apples
+        Coordinate appleToRemove = null;
+        for (Coordinate apple : apples){
+            if (getSnakeHead().equals(apple)){
+                appleToRemove = apple;
+                increaseTail = true;
+            }
+        }
+        if (appleToRemove != null){
+            apples.remove(appleToRemove);
+            AddApples();
+        }
     }
 
     public TileType[][] getMap() {
 // TileType[GameWidth][GameHeight] ?
         TileType[][] map= new TileType[GameWidth][GameHeight];
         for(int x=0;x<GameWidth;x++){
-            for(int y=0;y<GameHeight;y++){
+            for(int y=1;y<GameHeight;y++){
                 map[x][y]=TileType.Nothing;
             }
         }
+        for (Coordinate a : apples){
+            map[a.getX()][a.getY()] = TileType.Apple;
+        }
+
 //        mengubah semua bagian snake menjadi snaketail
         for (Coordinate s : snake){
             map[s.getX()][s.getY()] = TileType.SnakeTail;
@@ -95,6 +138,34 @@ public class GameEngine {
         }
         return map;
     }
+
+    private void AddApples() {
+        Coordinate coordinate = null;
+        boolean added = false;
+            while (!added) {
+                // agar tidak taruh didinding
+                int x = 1 + random.nextInt(GameWidth - 2);
+                int y = 2 + random.nextInt(GameHeight - 6);
+
+                coordinate = new Coordinate(x, y);
+                boolean collision = false;
+                for (Coordinate s : snake) {
+                    if (s.equals(coordinate)) {
+                        collision = true;
+                    }
+                }
+                for (Coordinate a : apples) {
+                    if (a.equals(coordinate)) {
+                        collision = true;
+                    }
+                }
+                added = !collision;
+            }
+            apples.add(coordinate);
+        }
+
+
+
 
     private void AddSnake(){
 //        remove all elements in snake list
@@ -110,7 +181,7 @@ public class GameEngine {
     private void AddWalls(){
 //        Top and Bottom Walls
         for(int x=0; x< GameWidth;x++){
-            walls.add(new Coordinate(x,0));
+            walls.add(new Coordinate(x,1));
             walls.add(new Coordinate(x,GameHeight-5));
         }
 //        Left and Right Walls
@@ -121,7 +192,10 @@ public class GameEngine {
         }
     }
     private void UpdateSnake(int x, int y){
-//        mengikuti snakehead
+        int newX = snake.get(snake.size() -1).getX();
+        int newY = snake.get(snake.size() -1).getY();
+
+        //        mengikuti snakehead
         for(int i=snake.size()-1;i>0;i--){
             snake.get(i).setX(snake.get(i-1).getX());
             snake.get(i).setY(snake.get(i-1).getY());
@@ -129,5 +203,13 @@ public class GameEngine {
 //        membuat snakehead berpindah sesuai arah
         snake.get(0).setX(snake.get(0).getX()+x);
         snake.get(0).setY(snake.get(0).getY()+y);
+//        paling belakang pindah ke depan
+//        snake.get(snake.size()-1).setX(snake.get(1).getX()+x);
+//        snake.get(snake.size()-1).setY(snake.get(1).getY()+y);
+        if (increaseTail){
+            snake.add(new Coordinate(newX,newY));
+            score+=10;
+            increaseTail = false;
+        }
     }
 }

@@ -44,7 +44,7 @@ public class SnakeView extends View {
 //            Math.min() return the smaller of two float values
             float circleSize = Math.min(tileSizeX,tileSizeY)/2;
             for (int x = 0; x < snakeViewMap.length; x++) {
-                for (int y = 0; y < snakeViewMap[x].length; y++) {
+                for (int y = 1; y < snakeViewMap[x].length; y++) {
                     switch (snakeViewMap[x][y]) {
 
                         case Nothing:
