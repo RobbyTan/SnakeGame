@@ -64,7 +64,6 @@ public class SnakeView extends View {
                             break;
                     }
                     canvas.drawCircle(x * tileSizeX + tileSizeX/2f+ circleSize/2,y * tileSizeY +tileSizeY/2f + circleSize/2, circleSize,mPaint);
-                    System.out.println(tileSizeX/2f);
                 }
             }
         }

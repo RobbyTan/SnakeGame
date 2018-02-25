@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private GameEngine gameEngine;
     private SnakeView snakeView;
     private final Handler handler = new Handler();
-    private final long updateDelay =125;
+    private int updateDelay =125;
     private float prevX,prevY;
     private Button btnPause,btnResume;
     private TextView txtScoreNumber;
@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     private void StartUpdateHandler(){
 //        untuk melakukan update setiap beberapa detik
+        updateDelay=getIntent().getIntExtra("DIFFICULTY",125);
         handler.postDelayed(updateScreen,updateDelay);
     }
     private void PauseUpdateHandler(){

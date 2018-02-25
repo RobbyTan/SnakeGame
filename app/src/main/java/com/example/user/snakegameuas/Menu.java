@@ -12,6 +12,7 @@ import android.widget.Spinner;
 public class Menu extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private Button btnStartGame;
+    private int difficulty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,7 @@ public class Menu extends AppCompatActivity implements AdapterView.OnItemSelecte
             @Override
             public void onClick(View v) {
                 Intent intent= new Intent( Menu.this, MainActivity.class);
+                intent.putExtra("DIFFICULTY",difficulty);
                 startActivity(intent);
             }
         });
@@ -33,7 +35,14 @@ public class Menu extends AppCompatActivity implements AdapterView.OnItemSelecte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        String text = parent.getSelectedItem().toString();
+        if(text.equals("Easy")){
+            difficulty=125;
+        }else if(text.equals("Medium")){
+            difficulty=100;
+        }else{
+            difficulty=75;
+        };
     }
 
     @Override
