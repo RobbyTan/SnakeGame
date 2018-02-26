@@ -5,6 +5,9 @@ package com.example.user.snakegameuas.engine;
  */
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.example.user.snakegameuas.classes.Coordinate;
 import com.example.user.snakegameuas.enums.Direction;
 import com.example.user.snakegameuas.enums.GameState;
@@ -209,6 +212,7 @@ public class GameEngine {
         if (increaseTail){
             snake.add(new Coordinate(newX,newY));
             score+=10;
+//            Untuk high score
             increaseTail = false;
         }
     }

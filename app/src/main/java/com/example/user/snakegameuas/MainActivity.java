@@ -1,5 +1,7 @@
 package com.example.user.snakegameuas;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,16 +22,18 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private GameEngine gameEngine;
     private SnakeView snakeView;
     private final Handler handler = new Handler();
-    private int updateDelay =125;
+    private int updateDelay =125,highScore=0;
     private float prevX,prevY;
     private Button btnPause,btnResume;
     private TextView txtScoreNumber;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //    Load Score
         gameEngine = new GameEngine();
         gameEngine.initGame();
         snakeView = (SnakeView) findViewById(R.id.snakeView);
@@ -81,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 //        invalidate untuk merefresh tampilan/redraw view
             snakeView.invalidate();
             txtScoreNumber.setText(String.valueOf(gameEngine.getScore()));
+//            untuk High Score
+            GameManager.INSTANCE.updateScore(gameEngine.getScore());
         }
     };
 
