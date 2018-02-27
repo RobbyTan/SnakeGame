@@ -38,6 +38,13 @@ public class Menu extends AppCompatActivity implements AdapterView.OnItemSelecte
         btnHighScore.setText(String.valueOf(GameManager.INSTANCE.getScore()));
     }
 
+//    Ketika balik ke activity menu lagi maka set text dari preference sekali lagi
+    @Override
+    protected void onResume() {
+        super.onResume();
+        btnHighScore.setText(String.valueOf(GameManager.INSTANCE.getScore()));
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getSelectedItem().toString();

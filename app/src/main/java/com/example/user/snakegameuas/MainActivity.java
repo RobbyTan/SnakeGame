@@ -86,7 +86,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             snakeView.invalidate();
             txtScoreNumber.setText(String.valueOf(gameEngine.getScore()));
 //            untuk High Score
-            GameManager.INSTANCE.updateScore(gameEngine.getScore());
+            if (gameEngine.getScore()>GameManager.INSTANCE.getScore()) {
+                GameManager.INSTANCE.updateScore(gameEngine.getScore());
+            }
         }
     };
 
@@ -94,6 +96,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private void OnGameLost(){
 //        Toast membuat pesan kecil dibawah
         Toast.makeText(this,"You Lost.", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
     }
 
