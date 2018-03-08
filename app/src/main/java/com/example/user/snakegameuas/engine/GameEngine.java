@@ -13,7 +13,10 @@ import com.example.user.snakegameuas.enums.Direction;
 import com.example.user.snakegameuas.enums.GameState;
 import com.example.user.snakegameuas.enums.TileType;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -34,7 +37,7 @@ public class GameEngine {
     private int score =0;
     //untuk menyimpan list dari class coordinate
     private List<Coordinate> walls = new ArrayList<>();
-    private List<Coordinate> snake = new ArrayList<>();
+    private Deque<Coordinate> snake = new LinkedList<>();
     private List<Coordinate> apples = new ArrayList<>();
 
     private Random random = new Random();
@@ -45,7 +48,7 @@ public class GameEngine {
     private GameState currentGameState = GameState.Running;
 
     private Coordinate getSnakeHead(){
-        return snake.get(0);
+        return snake.getFirst();
     }
 
     public GameEngine(){
@@ -71,6 +74,7 @@ public class GameEngine {
         return currentGameState;
     }
     public void Update(){
+
         switch (currentDirection){
             case North:
                 UpdateSnake(0,-1);
@@ -88,20 +92,19 @@ public class GameEngine {
 //        check for wall collision
         for (Coordinate w : walls){
 //            Tidak bisa pakai equals biasa karena membandingkan array of class dan membandingkan isi dari class
-            if(snake.get(0).equals(w)){
+            if(snake.getFirst().equals(w)){
                 currentGameState= GameState.Lost;
-                System.out.println(snake.get(0));
+                System.out.println(snake.getFirst());
                 System.out.println(w);
             }
         }
 
-        //untuk memeriksa jika snake menabrak diri sendiri
-        for (int i = 1; i < snake.size() ; i++){
-            if (getSnakeHead().equals(snake.get(i))){
-                currentGameState = GameState.Lost;
-                return;
-            }
-        }
+//        for (int i = 1; i < snake.size() ; i++){
+//            if (getSnakeHead().equals(snake.get(i))){
+//                currentGameState = GameState.Lost;
+//                return;
+//            }
+//        }
 
         //untuk memerika apples
         Coordinate appleToRemove = null;
@@ -134,7 +137,7 @@ public class GameEngine {
             map[s.getX()][s.getY()] = TileType.SnakeTail;
         }
 //        mengubah bagian pertama menjadi head
-        map[snake.get(0).getX()][snake.get(0).getY()] = TileType.SnakeHead;
+        map[snake.getFirst().getX()][snake.getFirst().getY()] = TileType.SnakeHead;
 
         for(Coordinate wall: walls){
             map[wall.getX()][wall.getY()]=TileType.Wall;
@@ -195,17 +198,24 @@ public class GameEngine {
         }
     }
     private void UpdateSnake(int x, int y){
-        int newX = snake.get(snake.size() -1).getX();
-        int newY = snake.get(snake.size() -1).getY();
-
+        int newX = snake.getLast().getX();
+        int newY = snake.getLast().getY();
+        Coordinate currentHeadX=snake.getFirst();
+        Coordinate newHead = new Coordinate(currentHeadX.getX()+x,currentHeadX.getY()+y);
         //        mengikuti snakehead
-        for(int i=snake.size()-1;i>0;i--){
-            snake.get(i).setX(snake.get(i-1).getX());
-            snake.get(i).setY(snake.get(i-1).getY());
+//            snake.getLast().setX(snake.getFirst().getX()+x);
+//            snake.getLast().setY(snake.getFirst().getY()+y);
+        for (Coordinate c:snake) {
+            if(newHead.equals(c)){
+                currentGameState = GameState.Lost;
+                return;
+            }
         }
+        snake.removeLast();
+        snake.addFirst(new Coordinate(currentHeadX.getX()+x,currentHeadX.getY()+y));
 //        membuat snakehead berpindah sesuai arah
-        snake.get(0).setX(snake.get(0).getX()+x);
-        snake.get(0).setY(snake.get(0).getY()+y);
+//        snake.get(0).setX(snake.get(0).getX()+x);
+//        snake.get(0).setY(snake.get(0).getY()+y);
 //        paling belakang pindah ke depan
 //        snake.get(snake.size()-1).setX(snake.get(1).getX()+x);
 //        snake.get(snake.size()-1).setY(snake.get(1).getY()+y);
