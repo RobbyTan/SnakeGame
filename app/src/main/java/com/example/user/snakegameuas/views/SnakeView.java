@@ -19,12 +19,12 @@ import com.example.user.snakegameuas.enums.TileType;
 public class SnakeView extends View {
     private Paint mPaint= new Paint();
     private TileType snakeViewMap[][];
-//    private Bitmap image;
+    private Bitmap image;
 
 
     public SnakeView(Context context, AttributeSet attrs) {
         super(context,attrs);
-//        image = BitmapFactory.decodeResource(getResources(), R.drawable.linux);
+        image = BitmapFactory.decodeResource(getResources(), R.drawable.uph);
     }
     public void setSnakeViewMap (TileType[][] map){
         this.snakeViewMap=map;
@@ -43,31 +43,37 @@ public class SnakeView extends View {
             float tileSizeY = canvas.getHeight() / snakeViewMap[0].length;
 //            Math.min() return the smaller of two float values
             float circleSize = Math.min(tileSizeX,tileSizeY)/2;
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(image,(int) tileSizeX,(int)tileSizeY,false );
             for (int x = 0; x < snakeViewMap.length; x++) {
                 for (int y = 1; y < snakeViewMap[x].length; y++) {
                     switch (snakeViewMap[x][y]) {
 
                         case Nothing:
                             mPaint.setColor(Color.WHITE);
+//                            canvas.drawCircle(x * tileSizeX + tileSizeX/2f+ circleSize/2,y * tileSizeY +tileSizeY/2f + circleSize/2, circleSize,mPaint);
                             break;
                         case Wall:
                             mPaint.setColor(Color.GREEN);
+//                            canvas.drawCircle(x * tileSizeX + tileSizeX/2f+ circleSize/2,y * tileSizeY +tileSizeY/2f + circleSize/2, circleSize,mPaint);
                             break;
                         case SnakeHead:
                             mPaint.setColor(Color.RED);
+//                            canvas.drawCircle(x * tileSizeX + tileSizeX/2f+ circleSize/2,y * tileSizeY +tileSizeY/2f + circleSize/2, circleSize,mPaint);
                             break;
                         case SnakeTail:
                             mPaint.setColor(Color.GREEN);
+//                            canvas.drawCircle(x * tileSizeX + tileSizeX/2f+ circleSize/2,y * tileSizeY +tileSizeY/2f + circleSize/2, circleSize,mPaint);
                             break;
                         case Apple:
                             mPaint.setColor(Color.RED);
+//                            canvas.drawBitmap(resizedBitmap,x * tileSizeX + tileSizeX/2f+ circleSize/2,y * tileSizeY +tileSizeY/2f + circleSize/2,null);
                             break;
                     }
                     canvas.drawCircle(x * tileSizeX + tileSizeX/2f+ circleSize/2,y * tileSizeY +tileSizeY/2f + circleSize/2, circleSize,mPaint);
                 }
             }
         }
-//        Bitmap resizedBitmap = Bitmap.createScaledBitmap(image,50,50,false );
-//        canvas.drawBitmap(resizedBitmap, 0,0,null);
+
+
     }
 }

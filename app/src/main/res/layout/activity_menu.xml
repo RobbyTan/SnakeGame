@@ -16,13 +16,34 @@
         android:id="@+id/btnHighScore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="High Score"
+        android:layout_above="@+id/txtDifficulty"
+        android:text="High Score" />
+    <TextView
+        android:id="@+id/txtDifficulty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Difficulty : "
+        style="@style/Base.TextAppearance.AppCompat.Medium"
         android:layout_centerVertical="true"/>
     <Spinner
         android:id="@+id/spiDiffculty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnHighScore">
+        android:layout_below="@+id/txtDifficulty">
+
+    </Spinner>
+    <TextView
+        android:id="@+id/txtMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mode :"
+        style="@style/Base.TextAppearance.AppCompat.Medium"
+        android:layout_below="@id/spiDiffculty"/>
+    <Spinner
+        android:id="@+id/spiMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtMode">
 
     </Spinner>
 </RelativeLayout>

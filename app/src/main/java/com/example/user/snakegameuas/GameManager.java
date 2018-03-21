@@ -25,6 +25,7 @@ public class GameManager {
     public void updateScore(int score){
         SharedPreferences.Editor editor = PREF.edit();
         editor.putInt("score",score);
+//        editor.remove("score");
         editor.commit();
     }
 

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         //    Load Score
         gameEngine = new GameEngine();
-        gameEngine.initGame();
+        gameEngine.initGame(getIntent().getStringExtra("MODE"));
         snakeView = (SnakeView) findViewById(R.id.snakeView);
         btnPause = (Button) findViewById(R.id.btnPause);
         btnResume = (Button) findViewById(R.id.btnResume);
@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             if (gameEngine.getScore()>GameManager.INSTANCE.getScore()) {
                 GameManager.INSTANCE.updateScore(gameEngine.getScore());
             }
+//            GameManager.INSTANCE.updateScore(gameEngine.getScore());
         }
     };
 

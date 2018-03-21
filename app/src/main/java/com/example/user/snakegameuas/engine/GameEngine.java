@@ -55,9 +55,12 @@ public class GameEngine {
 
     }
 
-    public void initGame(){
+    public void initGame(String mode){
         AddSnake();
-        AddWalls();
+        if (mode.equals("WALLS")) {
+            AddWalls();
+        }
+//        AddWalls();
         AddApples();
     }
 
@@ -150,7 +153,7 @@ public class GameEngine {
         boolean added = false;
             while (!added) {
                 // agar tidak taruh didinding
-                int x = 1 + random.nextInt(GameWidth - 2);
+                int x = 1 + random.nextInt(GameWidth - 3);
                 int y = 2 + random.nextInt(GameHeight - 6);
 
                 coordinate = new Coordinate(x, y);
@@ -212,6 +215,16 @@ public class GameEngine {
             }
         }
         snake.removeLast();
+        if(currentHeadX.getX()>=27){
+            currentHeadX.setX(0);
+        }
+        else if(currentHeadX.getX()<=0) {
+            currentHeadX.setX(26);
+        }else if(currentHeadX.getY()<=0){
+            currentHeadX.setY(37);
+        }else if(currentHeadX.getY()>=37){
+            currentHeadX.setY(0);
+        }
         snake.addFirst(new Coordinate(currentHeadX.getX()+x,currentHeadX.getY()+y));
 //        membuat snakehead berpindah sesuai arah
 //        snake.get(0).setX(snake.get(0).getX()+x);

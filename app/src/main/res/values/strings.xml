@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">Snakers</string>
     <string-array name="difficulty">
-        <item>Easy</item>
-        <item>Medium</item>
-        <item>Hard</item>
+        <item>EASY</item>
+        <item>MEDIUM</item>
+        <item>HARD</item>
+    </string-array>
+    <string-array name="mode">
+        <item>WALLS</item>
+        <item>WALL THROUGH</item>
     </string-array>
 </resources>
