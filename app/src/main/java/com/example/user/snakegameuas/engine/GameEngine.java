@@ -35,6 +35,7 @@ public class GameEngine {
     }
 
     private int score =0;
+    private int counter=0;
     //untuk menyimpan list dari class coordinate
     private List<Coordinate> walls = new ArrayList<>();
     private Deque<Coordinate> snake = new LinkedList<>();
@@ -140,8 +141,12 @@ public class GameEngine {
             map[s.getX()][s.getY()] = TileType.SnakeTail;
         }
 //        mengubah bagian pertama menjadi head
+        if(snake.getFirst().getX()==-1 || snake.getFirst().getY()==-1){
+            snake.getFirst().setX(0);
+            snake.getFirst().setY(0);
+        }
         map[snake.getFirst().getX()][snake.getFirst().getY()] = TileType.SnakeHead;
-
+        System.out.println("X : "+snake.getFirst().getX()+" Y : "+snake.getFirst().getY() );
         for(Coordinate wall: walls){
             map[wall.getX()][wall.getY()]=TileType.Wall;
         }
@@ -200,6 +205,15 @@ public class GameEngine {
             walls.add(new Coordinate(GameWidth-1,y));
         }
     }
+    private void moveApples(){
+        if(counter>40){
+            apples.remove(0);
+            AddApples();
+            counter=0;
+        }else{
+            counter++;
+        }
+    }
     private void UpdateSnake(int x, int y){
         int newX = snake.getLast().getX();
         int newY = snake.getLast().getY();
@@ -222,7 +236,7 @@ public class GameEngine {
             currentHeadX.setX(26);
         }else if(currentHeadX.getY()<=0){
             currentHeadX.setY(37);
-        }else if(currentHeadX.getY()>=37){
+        }else if(currentHeadX.getY()>37){
             currentHeadX.setY(0);
         }
         snake.addFirst(new Coordinate(currentHeadX.getX()+x,currentHeadX.getY()+y));
@@ -238,5 +252,6 @@ public class GameEngine {
 //            Untuk high score
             increaseTail = false;
         }
+        moveApples();
     }
 }
